@@ -18,6 +18,7 @@
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        ./overlays.nix
         inputs.pre-commit-hooks-nix.flakeModule
         inputs.treefmt-nix.flakeModule
       ];
@@ -57,6 +58,8 @@
               nix flake lock ./dev/private
               nix hash path ./dev/private > ./dev/private.narHash
             '';
+
+            inherit (pkgs) gotenberg keywind pizauth tika-server-standard;
           };
           pre-commit = {
             check.enable = defaultPlatform;
