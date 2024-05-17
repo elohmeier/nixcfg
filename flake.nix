@@ -59,7 +59,14 @@
               nix hash path ./dev/private > ./dev/private.narHash
             '';
 
-            inherit (pkgs) gotenberg keywind pizauth tika-server-standard;
+            inherit (pkgs)
+              attic-client
+              attic-server
+              celery-exporter
+              gotenberg
+              keywind
+              pizauth
+              tika-server-standard;
           };
           pre-commit = {
             check.enable = defaultPlatform;
