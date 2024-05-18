@@ -1,8 +1,17 @@
 { lib
+, buildPythonPackage
+, celery
+, click
 , fetchFromGitHub
-, python3
+, flask
+, loguru
+, poetry-core
+, prometheus-client
+, pythonRelaxDepsHook
+, redis
+, waitress
 }:
-python3.pkgs.buildPythonApplication rec {
+buildPythonPackage rec {
   pname = "celery-exporter";
   version = "0.10.3";
   format = "pyproject";
@@ -29,12 +38,12 @@ python3.pkgs.buildPythonApplication rec {
     EOF
   '';
 
-  nativeBuildInputs = with python3.pkgs; [
+  nativeBuildInputs = [
     poetry-core
     pythonRelaxDepsHook
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  propagatedBuildInputs = [
     celery
     click
     flask
@@ -42,6 +51,11 @@ python3.pkgs.buildPythonApplication rec {
     prometheus-client
     waitress
     redis
+  ];
+
+  pythonRelaxDeps = [
+    "prometheus-client"
+    "waitress"
   ];
 
   pythonRemoveDeps = [
