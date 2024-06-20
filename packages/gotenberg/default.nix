@@ -13,17 +13,18 @@
 
 buildGoModule rec {
   pname = "gotenberg";
-  version = "8.5.0";
+  version = "8.7.0";
 
   src = fetchFromGitHub {
     owner = "gotenberg";
     repo = "gotenberg";
     rev = "refs/tags/v${version}";
-    hash = "sha256-lOB2oC8xk945HlFbhiOyHrqkY+bu8+Kg2rOBj1ANtZo=";
+    hash = "sha256-hAcN1TdAkfppvHs1q2JSiUfi4uR2lpwiwfzE/47BIu8=";
   };
 
-  vendorHash = "sha256-h/Bd40ZQckw1rpPBxhJYO91Voz3qI8OV2ORg9/z4Stw=";
+  vendorHash = "sha256-nOSUB2Dk2DRWI9cdzi1t2pVjUvzz+C4oDVnBE1HCVII=";
 
+  # tests require files in /tests directory
   doCheck = false;
 
   ldflags = [
