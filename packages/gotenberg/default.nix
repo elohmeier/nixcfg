@@ -1,8 +1,9 @@
-{ lib
-, buildGoModule
+{ buildGoModule
 , chromium
 , exiftool
 , fetchFromGitHub
+, fontconfig
+, lib
 , libreoffice
 , makeWrapper
 , pdftk
@@ -25,28 +26,32 @@ buildGoModule rec {
 
   doCheck = false;
 
-  nativeBuildInputs = [ makeWrapper ];
-
   ldflags = [
     "-s"
     "-w"
     "-X github.com/gotenberg/gotenberg/v8/cmd.Version=${version}"
   ];
 
+  nativeBuildInputs = [ makeWrapper ];
+
+  FONTCONFIG_FILE = "${fontconfig.out}/etc/fonts/fonts.conf";
+
   preFixup = ''
     wrapProgram $out/bin/gotenberg \
-      --set CHROMIUM_BIN_PATH "${chromium}/bin/chromium" \
-      --set EXIFTOOL_BIN_PATH "${exiftool}/bin/exiftool" \
-      --set LIBREOFFICE_BIN_PATH "${libreoffice}/lib/libreoffice/program/soffice.bin" \
-      --set PDFTK_BIN_PATH "${pdftk}/bin/pdftk" \
-      --set QPDF_BIN_PATH "${qpdf}/bin/qpdf" \
-      --set UNOCONVERTER_BIN_PATH "${unoconv}/bin/unoconv"
+      --set-default CHROMIUM_BIN_PATH "${chromium}/bin/chromium" \
+      --set-default EXIFTOOL_BIN_PATH "${exiftool}/bin/exiftool" \
+      --set-default FONTCONFIG_FILE "${FONTCONFIG_FILE}" \
+      --set-default LIBREOFFICE_BIN_PATH "${libreoffice}/lib/libreoffice/program/soffice.bin" \
+      --set-default PDFTK_BIN_PATH "${pdftk}/bin/pdftk" \
+      --set-default QPDF_BIN_PATH "${qpdf}/bin/qpdf" \
+      --set-default UNOCONVERTER_BIN_PATH "${unoconv}/bin/unoconv"
   '';
 
   meta = with lib; {
     description = "Converts numerous document formats into PDF files";
     homepage = "https://github.com/gotenberg/gotenberg";
     license = licenses.mit;
+    mainProgram = "gotenberg";
     maintainers = with maintainers; [ elohmeier ];
   };
 }
