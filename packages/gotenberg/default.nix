@@ -3,7 +3,6 @@
 , chromium
 , exiftool
 , fetchFromGitHub
-, go
 , libreoffice
 , makeWrapper
 , pdftk

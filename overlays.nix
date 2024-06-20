@@ -9,7 +9,7 @@
     tika-server-standard = super.callPackage ./packages/tika-server-standard { };
 
     nixcfg-python3 = super.python3.override {
-      packageOverrides = self: super: {
+      packageOverrides = self: _super: {
         celery-exporter = self.callPackage ./packages/celery-exporter { };
       };
     };

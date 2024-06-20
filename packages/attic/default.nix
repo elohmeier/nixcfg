@@ -15,10 +15,6 @@
 , crates ? if clientOnly then [ "attic-client" ] else [ "attic-client" "attic-server" ]
 }:
 
-let
-  ignoredPaths = [ ".github" "target" "book" ];
-
-in
 rustPlatform.buildRustPackage rec {
   pname = "attic";
   version = "2024-03-29";
