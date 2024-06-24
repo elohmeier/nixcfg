@@ -15,6 +15,12 @@
     };
 
     celery-exporter = with _self.nixcfg-python3.pkgs; toPythonApplication celery-exporter;
+
+    link-paperless-docs = super.writers.writePython3Bin "link-paperless-docs"
+      {
+        flakeIgnore = [ "E265" "E501" ];
+        libraries = with super.python3Packages; [ click httpx pydantic structlog ];
+      } ./scripts/link-paperless-docs.py;
   };
 
   perSystem = { system, ... }: {

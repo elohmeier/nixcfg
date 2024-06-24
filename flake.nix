@@ -65,6 +65,7 @@
               celery-exporter
               gotenberg
               keywind
+              link-paperless-docs
               pizauth
               tika-server-standard;
           };
