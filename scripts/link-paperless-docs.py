@@ -277,7 +277,18 @@ class Document(BaseModel):
     help="Comma-separated list of tag IDs to be used for creating subfolders in the destination paths",
     envvar="FOLDER_TAGS",
 )
-@click.argument("tag-id", type=int)
+@click.option(
+    "--filter-tag-id",
+    type=int,
+    help="Tag ID to filter documents",
+    required=False,
+)
+@click.option(
+    "--all",
+    is_flag=True,
+    help="Query all documents",
+    required=False,
+)
 def link_paperless_docs(
     api_base_url: str,
     client_cert: Optional[str],
@@ -287,7 +298,8 @@ def link_paperless_docs(
     dst_dir: str,
     dry_run: bool,
     folder_tags: Optional[str],
-    tag_id: int,
+    filter_tag_id: Optional[int],
+    all: bool,
 ):
     """
     Main function to link Paperless documents to a destination directory.
@@ -301,11 +313,18 @@ def link_paperless_docs(
         dst_dir (str): Destination directory to link the documents.
         dst_path (Path): Destination directory path.
         dry_run (bool): If True, run the script in dry-run mode.
-        tag_id (int): The tag ID to filter documents.
+        filter_tag_id (Optional[int]): The tag ID to filter documents.
+        all (bool): If True, query all documents.
 
     Returns:
         None
     """
+    if not filter_tag_id and not all:
+        raise click.UsageError("You must provide either --filter-tag-id or --all.")
+
+    if filter_tag_id and all:
+        raise click.UsageError("You cannot use --filter-tag-id and --all together.")
+
     connection = Connection(
         api_base_url=api_base_url,
         client_cert=client_cert,
@@ -343,16 +362,20 @@ def link_paperless_docs(
         )
     }
 
+    params = {
+        "truncate_content": "true",
+        "page_size": DEFAULT_PAGE_SIZE,
+    }
+
+    if filter_tag_id:
+        params["tags__id__all"] = filter_tag_id
+
     docs = list(
         fetch_data_paginated(
             connection,
             "/api/documents/",
             PaginatedResponse[Document],
-            {
-                "tags__id__all": tag_id,
-                "truncate_content": "true",
-                "page_size": DEFAULT_PAGE_SIZE,
-            },
+            params,
         )
     )
 
