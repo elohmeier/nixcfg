@@ -3,6 +3,7 @@
   flake.overlays.default = _self: super: {
     attic-client = super.callPackage ./packages/attic { clientOnly = true; };
     attic-server = super.callPackage ./packages/attic { };
+    excelcompare = super.callPackage ./packages/excelcompare { };
     gotenberg = super.callPackage ./packages/gotenberg { };
     keywind = super.callPackage ./packages/keywind { };
     pizauth = super.callPackage ./packages/pizauth { inherit (super.pkgs.darwin.apple_sdk.frameworks) Security; };

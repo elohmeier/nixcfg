@@ -63,6 +63,7 @@
               attic-client
               attic-server
               celery-exporter
+              excelcompare
               gotenberg
               keywind
               link-paperless-docs
