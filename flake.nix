@@ -3,9 +3,11 @@
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-  outputs = publicInputs @ { self, nixpkgs, ... }:
+  outputs =
+    publicInputs@{ self, nixpkgs, ... }:
     let
-      loadPrivateFlake = path:
+      loadPrivateFlake =
+        path:
         let
           flakeHash = nixpkgs.lib.fileContents "${toString path}.narHash";
           flakePath = "path:${toString path}?narHash=${flakeHash}";
@@ -29,7 +31,14 @@
         "x86_64-linux"
       ];
 
-      perSystem = { config, lib, pkgs, self', system, ... }:
+      perSystem =
+        { config
+        , lib
+        , pkgs
+        , self'
+        , system
+        , ...
+        }:
         let
           defaultPlatform = pkgs.stdenv.hostPlatform.system == "x86_64-linux";
           inherit (pkgs.stdenv.hostPlatform) isLinux;
@@ -40,18 +49,24 @@
               devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
               packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
             in
-            devShells // { inherit (self') formatter; } // packages //
-            (lib.optionalAttrs isLinux (import ./dev/checks.nix {
-              inherit self pkgs;
-              prefix = "nixos";
-            }))
-            // (lib.optionalAttrs isLinux (import ./dev/checks.nix {
-              inherit self;
-              pkgs = import inputs.nixos-stable {
-                inherit system;
-              };
-              prefix = "nixos-stable";
-            }));
+            devShells
+            // {
+              inherit (self') formatter;
+            }
+            // packages
+            // (lib.optionalAttrs isLinux (
+              import ./dev/checks.nix {
+                inherit self pkgs;
+                prefix = "nixos";
+              }
+            ))
+            // (lib.optionalAttrs isLinux (
+              import ./dev/checks.nix {
+                inherit self;
+                pkgs = import inputs.nixos-stable { inherit system; };
+                prefix = "nixos-stable";
+              }
+            ));
 
           packages = {
             update-dev-private-narHash = pkgs.writeScriptBin "update-dev-private-narHash" ''
@@ -67,8 +82,10 @@
               gotenberg
               keywind
               link-paperless-docs
+              nixcfg-python3
               pizauth
-              tika-server-standard;
+              tika-server-standard
+              ;
           };
           pre-commit = {
             check.enable = defaultPlatform;
