@@ -37,6 +37,4 @@ let
 in
 exposeModules ./. [
   ./cli
-  ./services/gotenberg.nix
-  ./services/tika.nix
 ]

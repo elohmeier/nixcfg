@@ -76,17 +76,12 @@
             '';
 
             inherit (pkgs)
-              attic-client
-              attic-server
               celery-exporter
               excelcompare
-              gotenberg
               keywind
               link-paperless-docs
               nixcfg-python3
-              pizauth
               tabula-java
-              tika-server-standard
               ;
           };
           pre-commit = {
