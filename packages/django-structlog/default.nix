@@ -1,25 +1,24 @@
-{ lib
-, buildPythonPackage
-, django
-, django-ipware
-, python-ipware
-, fetchPypi
-, setuptools
-, structlog
+{
+  buildPythonPackage,
+  django,
+  django-ipware,
+  python-ipware,
+  fetchPypi,
+  setuptools,
+  structlog,
 }:
 buildPythonPackage rec {
   pname = "django-structlog";
-  version = "8.0.0";
+  version = "8.1.0";
   format = "pyproject";
 
   src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-5DmuFz2NhStfmR/3Uo2M5bCuADzG6lEyFTNLMgSu4Jw=";
+    pname = "django_structlog";
+    inherit version;
+    hash = "sha256-Aim5ou+9JKTjUAFpeI5TkVwkKVIeNOQd1YzMVgOb7z8=";
   };
 
-  buildInputs = [
-    setuptools
-  ];
+  buildInputs = [ setuptools ];
 
   propagatedBuildInputs = [
     django
