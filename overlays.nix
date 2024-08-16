@@ -9,6 +9,7 @@
     pizauth = prev.callPackage ./packages/pizauth {
       inherit (prev.pkgs.darwin.apple_sdk.frameworks) Security;
     };
+    tabula-java = prev.callPackage ./packages/tabula-java { };
     tika-server-standard = prev.callPackage ./packages/tika-server-standard { };
 
     nixcfg-python3 = prev.python3.override {

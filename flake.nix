@@ -1,5 +1,5 @@
 {
-  description = "nixcfg reusable nixos/home-manager configurations";
+  description = "nixcfg reusable nixos/home-manager configurations and packages";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
@@ -32,12 +32,13 @@
       ];
 
       perSystem =
-        { config
-        , lib
-        , pkgs
-        , self'
-        , system
-        , ...
+        {
+          config,
+          lib,
+          pkgs,
+          self',
+          system,
+          ...
         }:
         let
           defaultPlatform = pkgs.stdenv.hostPlatform.system == "x86_64-linux";
@@ -84,6 +85,7 @@
               link-paperless-docs
               nixcfg-python3
               pizauth
+              tabula-java
               tika-server-standard
               ;
           };
