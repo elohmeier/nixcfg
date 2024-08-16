@@ -8,25 +8,25 @@
     nixcfg-python3 = prev.python3.override {
       packageOverrides = self: _super: {
         celery-exporter = self.callPackage ./packages/celery-exporter { };
+        django-structlog = self.callPackage ./packages/django-structlog { };
         pypdfium = self.callPackage ./packages/pypdfium { };
       };
     };
 
     celery-exporter = with final.nixcfg-python3.pkgs; toPythonApplication celery-exporter;
 
-    link-paperless-docs = prev.writers.writePython3Bin "link-paperless-docs"
-      {
-        flakeIgnore = [
-          "E265"
-          "E501"
-        ];
-        libraries = with prev.python3Packages; [
-          click
-          httpx
-          pydantic
-          structlog
-        ];
-      } ./scripts/link-paperless-docs.py;
+    link-paperless-docs = prev.writers.writePython3Bin "link-paperless-docs" {
+      flakeIgnore = [
+        "E265"
+        "E501"
+      ];
+      libraries = with prev.python3Packages; [
+        click
+        httpx
+        pydantic
+        structlog
+      ];
+    } ./scripts/link-paperless-docs.py;
   };
 
   perSystem =
