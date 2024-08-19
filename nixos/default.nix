@@ -36,4 +36,7 @@ let
     listToAttrs (map toPair paths);
 
 in
-exposeModules ./. [ ./cli ]
+exposeModules ./. [
+  ./cli
+  ./mixins/tailscale.nix
+]
