@@ -38,5 +38,6 @@ let
 in
 exposeModules ./. [
   ./cli
+  ./cli/minimal.nix
   ./mixins/tailscale.nix
 ]
