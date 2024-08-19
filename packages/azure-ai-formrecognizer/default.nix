@@ -1,10 +1,4 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, azure-common
-, azure-core
-, msrest
-}:
+{ lib, buildPythonPackage, fetchPypi, azure-common, azure-core, msrest }:
 
 buildPythonPackage rec {
   pname = "azure-ai-formrecognizer";
@@ -15,11 +9,7 @@ buildPythonPackage rec {
     hash = "sha256-vV92TMQ4UpWJpOfSlVoioIg8fNzikc8UpToNkHnDQns=";
   };
 
-  propagatedBuildInputs = [
-    azure-common
-    azure-core
-    msrest
-  ];
+  propagatedBuildInputs = [ azure-common azure-core msrest ];
 
   pythonImportsCheck = [ "azure.ai.formrecognizer" ];
 

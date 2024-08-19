@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchFromGitHub, stdenvNoCC, jq, moreutils, nodePackages, cacert }:
+{ lib, stdenv, fetchFromGitHub, stdenvNoCC, jq, moreutils, nodePackages, cacert
+}:
 
 stdenv.mkDerivation rec {
   pname = "keywind";
@@ -15,12 +16,7 @@ stdenv.mkDerivation rec {
     pname = "${pname}-pnpm-deps";
     inherit src version;
 
-    nativeBuildInputs = [
-      jq
-      moreutils
-      nodePackages.pnpm
-      cacert
-    ];
+    nativeBuildInputs = [ jq moreutils nodePackages.pnpm cacert ];
 
     installPhase = ''
       export HOME=$(mktemp -d)
@@ -42,9 +38,7 @@ stdenv.mkDerivation rec {
     outputHash = "sha256-D/UMLX4WYBHMNywEU54RevG4a4ruATeUeOQmlTlQ7yg=";
   };
 
-  nativeBuildInputs = [
-    nodePackages.pnpm
-  ];
+  nativeBuildInputs = [ nodePackages.pnpm ];
 
   buildPhase = ''
     runHook preBuild

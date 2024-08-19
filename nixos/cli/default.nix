@@ -1,10 +1,7 @@
 { ... }:
 
 {
-  imports = [
-    ./fish.nix
-    ./packages.nix
-  ];
+  imports = [ ./fish.nix ./packages.nix ];
 
   programs.command-not-found.enable = false;
 }

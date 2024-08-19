@@ -7,7 +7,8 @@ let
   system = pkgs.system;
 
   nixosSystem = args:
-    import "${toString pkgs.path}/nixos/lib/eval-config.nix" ({ inherit lib system; } // args);
+    import "${toString pkgs.path}/nixos/lib/eval-config.nix"
+    ({ inherit lib system; } // args);
 
   # some example configuration to make it eval
   dummy = { config, ... }: {
@@ -21,12 +22,6 @@ let
     # Also important to have nixpkgs config which allows for some required insecure packages
     nixpkgs = { inherit pkgs; };
   };
-in
-{
-  example-common = nixosSystem {
-    modules = [
-      dummy
-      self.nixosModules.cli
-    ];
-  };
+in {
+  example-common = nixosSystem { modules = [ dummy self.nixosModules.cli ]; };
 }

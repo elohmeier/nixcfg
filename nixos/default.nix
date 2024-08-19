@@ -21,20 +21,19 @@ let
       str;
 
   # Map 1:1 between paths and modules
-  exposeModules = baseDir: paths:
+  exposeModules =
+    baseDir: paths:
     let
       prefix = stringLength (toString baseDir) + 1;
 
       toPair = path: {
-        name = replaceStrings [ "/" ] [ "-" ] (removeSuffix ".nix" (substring prefix 1000000
-          (toString path)));
+        name = replaceStrings [ "/" ] [ "-" ] (
+          removeSuffix ".nix" (substring prefix 1000000 (toString path))
+        );
         value = path;
       };
     in
-    listToAttrs (map toPair paths)
-  ;
+    listToAttrs (map toPair paths);
 
 in
-exposeModules ./. [
-  ./cli
-]
+exposeModules ./. [ ./cli ]

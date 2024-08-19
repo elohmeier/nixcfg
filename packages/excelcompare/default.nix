@@ -1,14 +1,5 @@
-{ stdenv
-, fetchFromGitHub
-, gradle
-, jdk
-, jre
-, lib
-, makeWrapper
-, perl
-, unzip
-, writeText
-}:
+{ stdenv, fetchFromGitHub, gradle, jdk, jre, lib, makeWrapper, perl, unzip
+, writeText }:
 
 let
   pname = "excelcompare";
@@ -64,8 +55,7 @@ let
     }
   '';
 
-in
-stdenv.mkDerivation {
+in stdenv.mkDerivation {
   inherit pname version src;
 
   nativeBuildInputs = [ jdk gradle makeWrapper unzip ];

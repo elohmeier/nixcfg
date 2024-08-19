@@ -1,12 +1,5 @@
-{
-  buildPythonPackage,
-  django,
-  django-ipware,
-  python-ipware,
-  fetchPypi,
-  setuptools,
-  structlog,
-}:
+{ buildPythonPackage, django, django-ipware, python-ipware, fetchPypi
+, setuptools, structlog, }:
 buildPythonPackage rec {
   pname = "django-structlog";
   version = "8.1.0";
@@ -20,10 +13,5 @@ buildPythonPackage rec {
 
   buildInputs = [ setuptools ];
 
-  propagatedBuildInputs = [
-    django
-    django-ipware
-    python-ipware
-    structlog
-  ];
+  propagatedBuildInputs = [ django django-ipware python-ipware structlog ];
 }

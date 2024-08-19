@@ -1,10 +1,4 @@
-{ lib
-, maven
-, fetchFromGitHub
-, makeWrapper
-, jre
-,
-}:
+{ lib, maven, fetchFromGitHub, makeWrapper, jre, }:
 
 maven.buildMavenPackage {
   pname = "tabula-java";

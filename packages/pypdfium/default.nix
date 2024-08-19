@@ -1,17 +1,5 @@
-{ lib
-, stdenv
-, runCommand
-, buildPythonPackage
-, fetchFromGitHub
-, fetchurl
-, callPackage
-, build
-, numpy
-, pillow
-, pytest
-, setuptools-scm
-,
-}:
+{ lib, stdenv, runCommand, buildPythonPackage, fetchFromGitHub, fetchurl
+, callPackage, build, numpy, pillow, pytest, setuptools-scm, }:
 let
   # TODO: Ideally we would build pdfium from source (libreoffice also uses it),
   # but it's quite complicated as it's a Chromium project.
@@ -35,17 +23,16 @@ let
     };
   };
 
-  pdfium =
-    if !builtins.hasAttr stdenv.hostPlatform.system supportedPdfiumBinVersions then
-      throw "Unsupported platform for pypdfium2 (please add it if it's available)."
-    else
-      supportedPdfiumBinVersions.${stdenv.hostPlatform.system};
+  pdfium = if !builtins.hasAttr stdenv.hostPlatform.system
+  supportedPdfiumBinVersions then
+    throw
+    "Unsupported platform for pypdfium2 (please add it if it's available)."
+  else
+    supportedPdfiumBinVersions.${stdenv.hostPlatform.system};
 
   parsedNumericVersionComponents = # Turns e.g. `"121.9.6110.0"` into `[121 9 6110 0]`.
-    let
-      jsonList = map builtins.fromJSON (lib.splitVersion pdfiumVersion);
-    in
-    assert lib.length jsonList == 4;
+    let jsonList = map builtins.fromJSON (lib.splitVersion pdfiumVersion);
+    in assert lib.length jsonList == 4;
     assert lib.all lib.isInt jsonList;
     jsonList;
   pdfiumVersion_major = lib.elemAt parsedNumericVersionComponents 0;
@@ -55,12 +42,13 @@ let
 
   # Contains more than a single dir; `builtins.fetchTarball` and `fetchzip` cannot handle that yet,
   # so we need to manually unpack it below.
-  pdfiumPrebuiltTar = (
-    fetchurl {
-      url = "https://github.com/bblanchon/pdfium-binaries/releases/download/chromium/${toString pdfiumVersion_build}/pdfium-${pdfium.platformFileInfix}.tgz";
-      hash = pdfium.hash;
-    }
-  );
+  pdfiumPrebuiltTar = (fetchurl {
+    url =
+      "https://github.com/bblanchon/pdfium-binaries/releases/download/chromium/${
+        toString pdfiumVersion_build
+      }/pdfium-${pdfium.platformFileInfix}.tgz";
+    hash = pdfium.hash;
+  });
 
   pdfium-bin = runCommand "pdfium-bin" { } ''
     mkdir "$out"
@@ -68,13 +56,7 @@ let
   '';
 
   ctypesgen_pypdfium_fork_package =
-    { lib
-    , buildPythonApplication
-    , fetchFromGitHub
-    , toml
-    , setuptools-scm
-    ,
-    }:
+    { lib, buildPythonApplication, fetchFromGitHub, toml, setuptools-scm, }:
     buildPythonApplication rec {
       pname = "ctypesgen";
       version = "ebd495b1733b60132151154d6358fd1eb336a36a";
@@ -89,19 +71,16 @@ let
 
       # This package uses setuptools-scm to derive the version from the git repo (which we don't have),
       # so use this environment variable to set it manually instead.
-      SETUPTOOLS_SCM_PRETEND_VERSION = "1.1.1+g${version}"; # we use the most recent tag and append the git version
+      SETUPTOOLS_SCM_PRETEND_VERSION =
+        "1.1.1+g${version}"; # we use the most recent tag and append the git version
 
       doCheck = false;
 
-      propagatedBuildInputs = [
-        toml
-        setuptools-scm
-      ];
+      propagatedBuildInputs = [ toml setuptools-scm ];
     };
   ctypesgen_pypdfium_fork = callPackage ctypesgen_pypdfium_fork_package { };
 
-in
-buildPythonPackage rec {
+in buildPythonPackage rec {
   pname = "pypdfium2";
   version = "4.30.0";
 
@@ -143,13 +122,7 @@ buildPythonPackage rec {
     # The `setup.py` invocation uses the `export`ed variables above.
   '';
 
-  propagatedBuildInputs = [
-    build
-    setuptools-scm
-    numpy
-    pytest
-    pillow
-  ];
+  propagatedBuildInputs = [ build setuptools-scm numpy pytest pillow ];
 
   # doCheck = false;
 
@@ -162,10 +135,7 @@ buildPythonPackage rec {
       asl20 # or
       bsd3
     ];
-    maintainers = with maintainers; [
-      chpatrick
-      nh2
-    ];
+    maintainers = with maintainers; [ chpatrick nh2 ];
     platforms = builtins.attrNames supportedPdfiumBinVersions;
   };
 }

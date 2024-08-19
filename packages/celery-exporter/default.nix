@@ -1,16 +1,5 @@
-{ lib
-, buildPythonPackage
-, celery
-, click
-, fetchFromGitHub
-, flask
-, loguru
-, poetry-core
-, prometheus-client
-, pythonRelaxDepsHook
-, redis
-, waitress
-}:
+{ lib, buildPythonPackage, celery, click, fetchFromGitHub, flask, loguru
+, poetry-core, prometheus-client, pythonRelaxDepsHook, redis, waitress }:
 buildPythonPackage rec {
   pname = "celery-exporter";
   version = "0.10.3";
@@ -38,31 +27,14 @@ buildPythonPackage rec {
     EOF
   '';
 
-  nativeBuildInputs = [
-    poetry-core
-    pythonRelaxDepsHook
-  ];
+  nativeBuildInputs = [ poetry-core pythonRelaxDepsHook ];
 
-  propagatedBuildInputs = [
-    celery
-    click
-    flask
-    loguru
-    prometheus-client
-    waitress
-    redis
-  ];
+  propagatedBuildInputs =
+    [ celery click flask loguru prometheus-client waitress redis ];
 
-  pythonRelaxDeps = [
-    "prometheus-client"
-    "waitress"
-  ];
+  pythonRelaxDeps = [ "prometheus-client" "waitress" ];
 
-  pythonRemoveDeps = [
-    "pretty-errors"
-  ];
+  pythonRemoveDeps = [ "pretty-errors" ];
 
-  pythonImportsCheck = [
-    "celery_exporter.cli"
-  ];
+  pythonImportsCheck = [ "celery_exporter.cli" ];
 }
