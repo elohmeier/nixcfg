@@ -1,17 +1,23 @@
-{ lib, maven, fetchFromGitHub, makeWrapper, jre, }:
+{
+  lib,
+  maven,
+  fetchFromGitHub,
+  makeWrapper,
+  jre,
+}:
 
 maven.buildMavenPackage {
   pname = "tabula-java";
-  version = "1.0.5-unstable-2024-08-12";
+  version = "1.0.5-unstable-2024-09-04";
 
   src = fetchFromGitHub {
     owner = "tabulapdf";
     repo = "tabula-java";
-    rev = "818c9a2f5a5ea8dc72d3efa775f192381e84b8c1";
-    hash = "sha256-3/X1TLKcfdse3seqCe0GNtj9We5gjJ4KZztmikL0X6U=";
+    rev = "5d91f1d733c4895d31854a641c152220f8c5f341";
+    hash = "sha256-Vy9m8XjmoG1PiELK7MXnEgJYy3Dr3HvdgP4minc9ENU=";
   };
 
-  mvnHash = "sha256-lcr4Erq2AFLYHYIv6nl5xS2metKIPYN3+bINbnSS9+g=";
+  mvnHash = "sha256-MZ9aIy2vrgoHa/Me0ju2uvoIFcJSVBzmRWnqGJlmULw=";
   mvnParameters = "compile assembly:single -Dmaven.test.skip=true";
 
   nativeBuildInputs = [ makeWrapper ];
