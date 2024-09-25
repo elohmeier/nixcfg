@@ -39,4 +39,5 @@ in
 exposeModules ./. [
   ./cli/fish.nix
   ./cli/git.nix
+  ./cli/tmux.nix
 ]
