@@ -6,25 +6,6 @@
 
     interactiveShellInit =
       let
-        # generate tide config into a file containing key-value pairs
-        # example output:
-        # tide_aws_bg_color normal
-        # tide_aws_color yellow
-        # ...
-        tidecfg =
-          let
-            script = pkgs.writeText "tide-configure-fish.fish" ''
-              set fish_function_path ${pkgs.fishPlugins.tide}/share/fish/vendor_functions.d $fish_function_path
-
-              tide configure --auto --style=Lean --prompt_colors='16 colors' --show_time='24-hour format' --lean_prompt_height='One line' --prompt_spacing=Compact --icons='Few icons' --transient=No
-            '';
-          in
-          pkgs.runCommandNoCC "tidecfg" { } ''
-            HOME=$(mktemp -d)
-            ${pkgs.fish}/bin/fish ${script}
-            ${pkgs.fish}/bin/fish -c "set -U --long" > $out
-          '';
-
         # cache vivid output in the store
         ls_colors_dark = pkgs.runCommandNoCC "ls_colors_dark" { } ''
           ${pkgs.vivid}/bin/vivid generate tokyonight-night > $out
@@ -38,14 +19,9 @@
 
         fzf_configure_bindings --directory=\ct
 
-        # Check if tide is configured by checking one of the variables
-        if not set -q tide_aws_bg_color
-          # Load the tide configuration from the generated file
-          echo "Loading tide configuration (only once)" >&2
-          for line in (cat ${tidecfg})
-            # tide only works with universal variables
-            eval "set -U $line"
-          end
+        if test -e /proc/sys/fs/binfmt_misc/WSLInterop
+            # WSL may not have an icon font available
+            set -gx hydro_symbol_prompt \$
         end
 
         set -l DARK_MODE 1
@@ -122,8 +98,8 @@
         inherit (fzf-fish) src;
       }
       {
-        name = "tide";
-        src = tide.src;
+        name = "hydro";
+        src = hydro.src;
       }
     ];
   };
