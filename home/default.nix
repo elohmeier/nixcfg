@@ -37,8 +37,9 @@ let
 
 in
 exposeModules ./. [
+  ./cli/direnv
   ./cli/fish.nix
   ./cli/git.nix
-  ./cli/tmux/ascii.nix
   ./cli/tmux
+  ./cli/tmux/ascii.nix
 ]
