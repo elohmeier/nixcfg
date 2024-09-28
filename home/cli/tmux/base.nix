@@ -1,6 +1,8 @@
-{ pkgs, ... }:
 {
-
+  ascii ? false,
+}:
+{ lib, pkgs, ... }:
+{
   programs.tmux = {
     enable = true;
 
@@ -45,10 +47,32 @@
         '';
       }
       {
-        plugin = tmuxPlugins.catppuccin;
-        extraConfig = ''
-          set -g @catppuccin_flavour 'mocha'
-        '';
+        plugin = tmuxPlugins.catppuccin.overrideAttrs (_: {
+          version = "0.2.0";
+          src = fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "tmux";
+            rev = "refs/tags/v0.2.0";
+            hash = "sha256-XikYIryhixheyI3gmcJ+AInDBzCq2TXllfarnrRifEo=";
+          };
+        });
+        extraConfig =
+          ''
+            set -g @catppuccin_flavor 'mocha'
+          ''
+          + lib.optionalString ascii ''
+            set -g @catppuccin_icon_window_last ">"
+            set -g @catppuccin_icon_window_current "*"
+            set -g @catppuccin_icon_window_zoom "Z"
+            set -g @catppuccin_icon_window_mark "M"
+            set -g @catppuccin_icon_window_silent "S"
+            set -g @catppuccin_icon_window_activity "A"
+            set -g @catppuccin_icon_window_bell "B"
+
+            set -g @catppuccin_status_left_separator "null"
+            set -g @catppuccin_application_icon "null"
+            set -g @catppuccin_session_icon "null"
+          '';
       }
       {
         plugin = tmuxPlugins.yank;
