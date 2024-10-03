@@ -78,6 +78,7 @@
             inherit (pkgs)
               celery-exporter
               excelcompare
+              google-ocr
               keywind
               link-paperless-docs
               nixcfg-python3
