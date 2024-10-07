@@ -41,6 +41,7 @@ exposeModules ./. [
   ./cli/direnv
   ./cli/fish
   ./cli/git.nix
+  ./cli/lazygit.nix
   ./cli/tmux
   ./cli/tmux/ascii.nix
 ]
