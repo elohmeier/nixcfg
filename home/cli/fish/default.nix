@@ -13,13 +13,15 @@ let
       # fishThemeName = if isDark then "Rosé Pine" else "Rosé Pine Dawn";
       fishThemeName = if isDark then "TokyoNight Night" else "TokyoNight Day";
       batThemeName = if isDark then "tokyonight_night" else "tokyonight_day";
+      deltaThemeName = if isDark then "tokyonight_night" else "tokyonight_day";
       vividThemeName = if isDark then "tokyonight-night" else "ayu";
     in
     ''
       fish_config theme choose "${fishThemeName}"
-      set -gx LS_COLORS "${vividGen vividThemeName}"
       set -gx AICHAT_LIGHT_THEME "${if isDark then "0" else "1"}"
       set -gx BAT_THEME "${batThemeName}"
+      set -gx DELTA_FEATURES "+${deltaThemeName}"
+      set -gx LS_COLORS "${vividGen vividThemeName}"
     '';
 
   configureColors =
