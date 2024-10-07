@@ -37,6 +37,7 @@ let
 
 in
 exposeModules ./. [
+  ./cli/bat.nix
   ./cli/direnv
   ./cli/fish
   ./cli/git.nix
