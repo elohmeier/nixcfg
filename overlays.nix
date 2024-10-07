@@ -3,6 +3,7 @@
   flake.overlays.default = final: prev: {
     excelcompare = prev.callPackage ./packages/excelcompare { };
     keywind = prev.callPackage ./packages/keywind { };
+    realise-symlink = prev.callPackage ./packages/realise-symlink { };
     tabula-java = prev.callPackage ./packages/tabula-java { };
 
     nixcfg-python3 = prev.python3.override {
