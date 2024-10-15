@@ -17,6 +17,7 @@
 
     extraConfig = ''
       set-option -g focus-events on
+      set-option -g allow-passthrough on
       set-option -sa terminal-features ',xterm-256color:RGB'
     '';
 
