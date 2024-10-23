@@ -2,6 +2,7 @@
 {
   flake.overlays.default = final: prev: {
     excelcompare = prev.callPackage ./packages/excelcompare { };
+    kanboard = prev.callPackage ./packages/kanboard { };
     keywind = prev.callPackage ./packages/keywind { };
     realise-symlink = prev.callPackage ./packages/realise-symlink { };
     tabula-java = prev.callPackage ./packages/tabula-java { };

@@ -79,6 +79,7 @@
               celery-exporter
               excelcompare
               google-ocr
+              kanboard
               keywind
               link-paperless-docs
               nixcfg-python3
