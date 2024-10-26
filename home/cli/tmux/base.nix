@@ -69,6 +69,12 @@
           set -g @yank_selection_mouse 'clipboard'
         '';
       }
+      {
+        plugin = tmuxPlugins.tilish;
+        extraConfig = ''
+          set -g @tilish-default 'main-vertical'
+        '';
+      }
     ];
   };
 }
