@@ -36,12 +36,12 @@
       }
       {
         plugin = tmuxPlugins.catppuccin.overrideAttrs (_: {
-          version = "0.2.0";
+          version = "2.1.0";
           src = fetchFromGitHub {
             owner = "catppuccin";
             repo = "tmux";
-            rev = "refs/tags/v0.2.0";
-            hash = "sha256-XikYIryhixheyI3gmcJ+AInDBzCq2TXllfarnrRifEo=";
+            rev = "refs/tags/v2.1.0";
+            hash = "sha256-kWixGC3CJiFj+YXqHRMbeShC/Tl+1phhupYAIo9bivE=";
           };
         });
         extraConfig =
