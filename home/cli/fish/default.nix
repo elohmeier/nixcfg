@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   vividGen =
@@ -19,9 +24,11 @@ let
     ''
       fish_config theme choose "${fishThemeName}"
       set -gx AICHAT_LIGHT_THEME "${if isDark then "0" else "1"}"
-      set -gx BAT_THEME "${batThemeName}"
       set -gx DELTA_FEATURES "+${deltaThemeName}"
       set -gx LS_COLORS "${vividGen vividThemeName}"
+    ''
+    + lib.optionalString config.programs.bat.enable ''
+      set -gx BAT_THEME "${batThemeName}"
     '';
 
   configureColors =
