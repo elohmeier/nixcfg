@@ -20,7 +20,7 @@
     ];
 
     extraConfig = {
-      init.defaultBranch = "master";
+      init.defaultBranch = "main"; # shorter than `master`, better semantic and doesn't make me horny
       pull = {
         rebase = false;
         ff = "only";
