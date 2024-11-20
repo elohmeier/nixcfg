@@ -93,6 +93,8 @@ in
     };
 
     shellAliases = {
+      cg = "cd (git rev-parse --show-toplevel)";
+
       gg = "lazygit";
       lgg = "lazygit";
 
