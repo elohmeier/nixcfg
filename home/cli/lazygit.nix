@@ -138,6 +138,12 @@ _: {
           context = "files";
           subprocess = true;
         }
+        {
+          key = "<c-4>";
+          command = "gh pr create --fill --web";
+          context = "global";
+          loadingText = "Creating pull request on GitHub";
+        }
       ];
       git = {
         paging = {
