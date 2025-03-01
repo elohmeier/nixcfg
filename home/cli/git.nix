@@ -20,11 +20,55 @@
     ];
 
     extraConfig = {
+      column.ui = "auto";
+
       branch = {
         main.rebase = true;
         master.rebase = true;
+        sort = "-committerdate";
       };
+
       init.defaultBranch = "main"; # shorter than `master`, better semantic and doesn't make me horny
+
+      tag.sort = "version:refname";
+
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "plain";
+        mnemonicPrefix = true;
+        renames = true;
+      };
+
+      push = {
+        default = "simple";
+        autoSetupRemote = true;
+        followTags = true;
+      };
+
+      pull.rebase = true;
+
+      fetch = {
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+
+      help.autocorrect = "prompt";
+
+      commit.verbose = true;
+
+      rerere = {
+        enabled = true;
+        autoupdate = true;
+      };
+
+      merge.conflictstyle = "zdiff3";
+
+      rebase = {
+        autoSquash = true;
+        autoStash = true;
+        updateRefs = true;
+      };
     };
 
     delta = {
