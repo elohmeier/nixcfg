@@ -3,5 +3,5 @@
 set -e
 set -x
 
-nix-update --flake --commit --version=branch tabula-java
+nix-update --flake --commit --version=branch tabula-java-jar
 nix-update --flake --commit kanboard

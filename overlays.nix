@@ -3,7 +3,8 @@
   flake.overlays.default = final: prev: {
     kanboard = prev.callPackage ./packages/kanboard { };
     realise-symlink = prev.callPackage ./packages/realise-symlink { };
-    tabula-java = prev.callPackage ./packages/tabula-java { };
+    tabula-java-jar = prev.callPackage ./packages/tabula-java { };
+    tabula-java = prev.callPackage ./packages/tabula-java/wrapper.nix { };
   };
 
   perSystem =

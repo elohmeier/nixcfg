@@ -74,6 +74,7 @@
               kanboard
               realise-symlink
               tabula-java
+              tabula-java-jar
               ;
           };
           pre-commit = {
