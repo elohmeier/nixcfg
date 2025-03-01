@@ -2,16 +2,16 @@
 
 maven.buildMavenPackage {
   pname = "tabula-java";
-  version = "1.0.5-unstable-2024-09-04";
+  version = "1.0.5-unstable-2025-02-23";
 
   src = fetchFromGitHub {
     owner = "tabulapdf";
     repo = "tabula-java";
-    rev = "5d91f1d733c4895d31854a641c152220f8c5f341";
-    hash = "sha256-Vy9m8XjmoG1PiELK7MXnEgJYy3Dr3HvdgP4minc9ENU=";
+    rev = "971ae765e84f09ed83f5808b66f764590146e923";
+    hash = "sha256-vJHydFQ9AdGTL1NpexGJTvx3w9+1eqkGbko7fredyJQ=";
   };
 
-  mvnHash = "sha256-MZ9aIy2vrgoHa/Me0ju2uvoIFcJSVBzmRWnqGJlmULw=";
+  mvnHash = "sha256-H9XkMImCjluHU+q+r0Y0ZyAnE1DEGr7iQMThKbEbhbU=";
   mvnParameters = "compile assembly:single -Dmaven.test.skip=true";
 
   installPhase = ''
