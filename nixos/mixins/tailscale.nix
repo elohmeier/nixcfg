@@ -137,7 +137,8 @@ in
           WorkingDirectory = "/var/lib/tailscale-cert";
         }
         // lib.optionalAttrs (config.nixcfg.tailscale.certPostScript != "") {
-          "ExecStartPost" = "+${pkgs.writeShellScript "tailscale-cert-post" config.nixcfg.tailscale.certPostScript}";
+          "ExecStartPost" =
+            "+${pkgs.writeShellScript "tailscale-cert-post" config.nixcfg.tailscale.certPostScript}";
         };
 
       startAt = "daily";
