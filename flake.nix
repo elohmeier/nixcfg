@@ -71,13 +71,8 @@
 
           packages = {
             inherit (pkgs)
-              celery-exporter
-              excelcompare
-              google-ocr
               kanboard
-              keywind
-              link-paperless-docs
-              nixcfg-python3
+              realise-symlink
               tabula-java
               ;
           };
